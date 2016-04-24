@@ -3,7 +3,7 @@
 
 A library implementing both the classic and covering LSH schemes has been developed in order to facilitate an experimental evaluation of the two. The library has been released as open-source software and is available at \url{https://github.com/kasperisager/hemingway}. C++ was chosen as the implementation language as it balances blazing performance with higher-level constructs that help ensure a safe and succicent implementation. The library is fairly simple in that it only exposes two classes: \texttt{lsh::vector} for representing bit vectors and \texttt{lsh::table} for representing the actual LSH data structure.
 
-The \texttt{lsh::vector} class provides an efficient bit vector representation that allows for arbitraily large dimensionsality by storing bit components in a variable number of 32-bit unsigned integer chunks. This representation effectively supports all the operations needed by the LSH schemes:
+\paragraph{Vector} The \texttt{lsh::vector} class provides an efficient bit vector representation that allows for arbitraily large dimensionsality by storing bit components in a variable number of 32-bit unsigned integer chunks. This representation effectively supports all the operations needed by the LSH schemes:
 
 \begin{itemize}
   \item Random access in $O(1)$
@@ -16,6 +16,8 @@ The \texttt{lsh::vector} class provides an efficient bit vector representation t
 
 Here $c$ denotes the number of component chunks in a vector. The \texttt{\_\_builtin\_popcount} intrinsic is used for performing population counts in $O(1)$, hence complexity $O(c)$ of the distance, equality, dot product, and AND operations.
 
-The \texttt{lsh::table} class provides a representation of the LSH data structure itself and is initialized by supplying a configuration for either the classic or covering LSH scheme. Once configured, vectors can be inserted into and erased from the table using an API similar to that of most data structures in the C++ standard library. Query operations can then be performed against the table once filled with data.
+\paragraph{Table} The \texttt{lsh::table} class provides a representation of the LSH data structure itself and is initialized by supplying a configuration for either the classic or covering LSH scheme. Once configured, vectors can be inserted into and erased from the table using an API similar to that of most data structures in the C++ standard library. Query operations can then be performed against the table once filled with data.
+
+The table consists of several partitions, each represented as \texttt{std::unordered\_map<lsh::vector, bucket>} where \texttt{lsh::vector} is the hashed version of an input vector. When adding a vector to the table, this vector is stored in an associated bucket in each of the different partitions. The vector hash used for associating a vector with a bucket is constructed differently depending on the configured LSH scheme, but this is in essence the only functional difference between the different schemes.
 
 When configuring the table, the notion of the approximation factor, $c$, and the radius to a nearest neighbour, $r$, is completely left out. Instead, in the case of classic LSH, the width of vector hashes and the number of partitions to use are specified. Likewise, in the case of covering LSH, the radius to cover is specified. The onus of picking parameters appropriate for a given input set and use case is therefore on the client of the library.

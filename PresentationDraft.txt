@@ -1,0 +1,21 @@
+Introdcution to the problem why we need lsh 
+	- mining massive data sets
+	- nn complexity
+Current LSH and theirs drawbacks 
+	- false positives and negatives and why it is so limitting
+Which paper is base of our project Who wrote it
+	- Rasmus paper
+Main idea of the paper what it changes 
+	- how different Covering families are from bit sampling
+	- why it works
+Why it is awesome 
+	- is not excluding results - fingerprint scenario
+
+More paperz 
+	- Nin paper, mention that Indyk is working on it for nearly 20 years. 
+Conclusion. 
+	- it works
+	- it has performance benefits with not so drastic drawbacks
+	- it still could be improved
+	- it is already appreciated by the algorithm community 
+

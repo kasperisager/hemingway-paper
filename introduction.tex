@@ -15,7 +15,7 @@ An increasingly popular approach for tackling similarity search in high-dimensio
   \item Human fingerprints
 \end{itemize}
 
-The basic idea of LSH is to hash items to buckets in a way that provides a higher probability of similar items being hashed to the same bucket than dissimilar items \cite{DBLP:books/cu/LeskovecRU14}. Items that then hash to the same bucket despite them being dissimilar are \textit{false positives}. On the other hand, similar items that never hash to the same bucket are \textit{false negatives}. While false positives have no effect on the precision of queries, false negatives may cause the algorithm to never consider items that are in fact the most similar to a query item.
+The basic idea of LSH is to hash items to buckets in a way that provides a higher probability of similar items being hashed to the same bucket than dissimilar items. Items that then hash to the same bucket despite them being dissimilar are \textit{false positives}. On the other hand, similar items that never hash to the same bucket are \textit{false negatives} \cite[p. 88]{DBLP:books/cu/LeskovecRU14}. While false positives have no effect on the precision of queries, false negatives may cause the algorithm to never consider items that are in fact the most similar to a query item.
 
 A recent paper by Rasmus Pagh \cite{DBLP:journals/corr/Pagh15} proposes an LSH scheme for Hamming space that completely does away with false negatives at a cost in efficiency. The purpose of our paper is to provide a generalised implementation of this LSH scheme and compare it with classic LSH.
 

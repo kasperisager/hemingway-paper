@@ -1,7 +1,7 @@
 \section{Implementation}
 \label{implementation}
 
-A library implementing both the classic and covering LSH schemes has been developed in order to facilitate an experimental evaluation of the two. The library has been released as open-source software and is available at \url{https://github.com/kasperisager/hemingway}. C++ was chosen as the implementation language as it balances blazing performance with higher-level constructs that help ensure a safe and succicent implementation. The library is fairly simple in that it only exposes two classes: \texttt{lsh::vector} for representing bit vectors and \texttt{lsh::table} for representing the actual LSH data structure.
+A library implementing both the classic and covering LSH schemes has been developed in order to facilitate an experimental evaluation of the two. The library has been released as open-source software and is available at \url{https://github.com/kasperisager/hemingway}. C++ was chosen as the implementation language as it balances blazing performance with higher-level constructs that help ensure a safe and succint implementation. The library is fairly simple in that it only exposes two classes: \texttt{lsh::vector} for representing bit vectors and \texttt{lsh::table} for representing the actual LSH data structure.
 
 \paragraph{Vector} The \texttt{lsh::vector} class provides an efficient bit vector representation that allows for arbitraily large dimensionsality by storing bit components in a variable number of 32-bit unsigned integer chunks. This representation effectively supports all the operations needed by the LSH schemes:
 

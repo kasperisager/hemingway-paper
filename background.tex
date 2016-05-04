@@ -1,6 +1,31 @@
 \section{Background}
 \label{background}
 
+As touched upon in section \ref{introduction}, locality-sensitive hashing tackles the problem of similarity search in high-dimensional datasets by relaxing the requirement of finding exact nearest neighbours. Instead, LSH is used as an \textit{approximate} nearest neighbour algorithm, which inherently implies only probabilistic guarantees of finding a nearest neighbour. In general, LSH schemes act as randomized filters that attempt to reduce an input set to a subset of candidates for a given query item.
+
 \subsection{Classic LSH}
+\label{background-classic-lsh}
+
+The classic LSH scheme for Hamming space uses a random bit sampling approach for picking a number of components from an input vector. This sample is then used as the key in a map structure, which will be referred to as a \textit{partition}, for locating a \textit{bucket} that the vector should be stored in. When looking for the nearest neighbour of a query vector, this sampling is repeated and the candidate vectors are those found in the bucket that the sample maps to.
+
+\begin{example}
+\label{example-classic-sampling}
+Given input vector $v = 1101$, we randomly chose to sample component 1 and 3, giving us the key $v' = 10$. We then proceed to update our map structure with an entry for this key: $10 \rightarrow \{1101\}$
+
+Given another input vector $u = 0110$, we again sample component 1 and 3, giving us the key $u' = 01$. We then add another entry to our map: $10 \rightarrow \{1101\}, 01 \rightarrow \{0110\}$.
+
+Given a query vector $q = 1001$, we once again sample component 1 and 3, giving us the key $q' = 10$. We then look up this key in our map and receive the following set of candidates: $\{1101\}$.
+\end{example}
+
+As can be seen in example \ref{example-classic-sampling}, $v$ and $u$ are not particularly similar as they only share a single component; by the sampling 1 and 3 they therefore do not map to the same bucket. However, $v$ and $q$ are almost identical as they share all but one component; the sampling 1 and 3 therefore maps them to the same bucket, albeit by chance. We have effectively reduced the set of potential candidates to half of the items in the original input set.
+
+By adjusting the number of components sampled from vectors we can change the notion of similarity in the data structure. That is, by increasing the sample size we decrease the chance of vectors colliding, and vice versa, as more components would then have to match in order for a collision to happen.
+
+If we want to keep the same sample size, but still increase the chance of vectors colliding, then we need to use more than one partition. For each partition, the components to sample for the given partition are picked independently and uniformly at random.
+
+\paragraph{Collision probabilities} By tweaking the sample size and the number of partitions to use, we can control the two probabilities $p_1$ and $p_2$, where $p_1$ is the lower bound on the probablity of close vectors colliding and $p_2$ is the upper bound on the probability of distant vectors colliding \cite[p. 100]{DBLP:books/cu/LeskovecRU14}. As such, we want $p_1$ to be close to 1 whereas we want $p_2$ to be close to 0. The intricate details of these collision probabilities will however not be touched more upon in this paper; we instead refer to \cite{DBLP:conf/stoc/IndykM98} and \cite{DBLP:books/cu/LeskovecRU14}.
 
 \subsection{Covering LSH}
+\label{background-covering-lsh}
+
+\textit{To be written}

@@ -1,23 +1,22 @@
 \section{Introduction}
 \label{introduction}
 
-An increasingly popular approach for tackling similarity search in high-dimensional datasets is the so-called \textit{locality-sensitive hashing} (\textit{LSH}) technique, first presented by Piotr Indyk and Rajeev Motwani \cite{DBLP:conf/stoc/IndykM98}. The basic idea of LSH is to hash items to buckets in a way that provides a higher probability of similar items being hashed to the same bucket than dissimilar items. Items that then hash to the same bucket despite them being dissimilar are \textit{false positives}. On the other hand, similar items that never hash to the same bucket are \textit{false negatives}. While false positives have no effect on the precision of queries, false negatives may cause the algorithm to never consider items that are in fact the most similar to a query item.
-
-In the universe of ever growing data sets working with massive data sets is becoming more demanding and often difficult. LSH already has a lot of applications like a:
+An increasingly popular approach for tackling similarity search in high-dimensional datasets is the so-called \textit{locality-sensitive hashing} (\textit{LSH}) technique, first presented by Piotr Indyk and Rajeev Motwani \cite{DBLP:conf/stoc/IndykM98}. In the universe of ever growing datasets, working with massive amounts of data is becoming more demanding and often difficult. LSH has therefore already found itself useful in a wide range of practical applications:
 
 \begin{itemize}
   \item Near-duplicate detection
   \item Hierarchical clustering
   \item Genome-wide association study
   \item Image similarity identification
-  \item Gene expression similarity identification[citation needed]
   \item Audio similarity identification
-  \item Nearest neighbor search
-  \item Audio fingerprint
+  \item Nearest neighbour search
+  \item Audio fingerprinting
   \item Digital video fingerprinting
-  \item Human fingerprints 
+  \item Human fingerprints
 \end{itemize}
+
+The basic idea of LSH is to hash items to buckets in a way that provides a higher probability of similar items being hashed to the same bucket than dissimilar items. Items that then hash to the same bucket despite them being dissimilar are \textit{false positives}. On the other hand, similar items that never hash to the same bucket are \textit{false negatives} \cite[p. 88]{DBLP:books/cu/LeskovecRU14}. While false positives have no effect on the precision of queries, false negatives may cause the algorithm to never consider items that are in fact the most similar to a query item.
 
 A recent paper by Rasmus Pagh \cite{DBLP:journals/corr/Pagh15} proposes an LSH scheme for Hamming space that completely does away with false negatives at a cost in efficiency. The purpose of our paper is to provide a generalised implementation of this LSH scheme and compare it with classic LSH.
 
-\textbf{Organisation} This paper is organised as follows: In section \ref{background} we provide the background for classic LSH, including how it works and its inherit drawbacks, and outline the covering LSH scheme and the gurantees that it provides. In section \ref{implementation} we describe our implementation of the two LSH schemes. In section \ref{evaluation} an experimental evaluation based on real data is made after which we compare the two LSH schemes.
+\paragraph{Organisation} This paper is organised as follows: In section \ref{background} we provide the background for classic LSH, including how it works and its inherit drawbacks, and outline the covering LSH scheme and the gurantees that it provides. In section \ref{implementation} we describe our implementation of the two LSH schemes. In section \ref{evaluation} an experimental evaluation based on real data is made after which we compare the two LSH schemes.

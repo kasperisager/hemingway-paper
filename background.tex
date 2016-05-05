@@ -1,7 +1,7 @@
 \section{Background}
 \label{background}
 
-As touched upon in section \ref{introduction}, locality-sensitive hashing tackles the problem of similarity search in high-dimensional datasets by relaxing the requirement of finding exact nearest neighbours. Instead, LSH is used as an \textit{approximate} nearest neighbour algorithm, which inherently implies only probabilistic guarantees of finding a nearest neighbour. In general, LSH schemes act as randomized filters that attempt to reduce an input set to a subset of candidates for a given query item.
+As touched upon in section \ref{introduction}, locality-sensitive hashing tackles the problem of similarity search in high-dimensional datasets by relaxing the requirement of finding exact nearest neighbours. Instead, LSH is used as an \textit{approximate} nearest neighbour algorithm, which inherently implies only probabilistic guarantees of finding a nearest neighbour. In general, LSH act as a randomized filter that attempt to reduce an input set to a subset of candidates for a given query item.
 
 The formal definition of the approximate nearest neighbour problem for Hamming space is given as follows in \cite{DBLP:journals/corr/PhamP16}:
 
@@ -16,11 +16,11 @@ The data structure mentioned in definition \ref{definition-nearest-neighbour} ma
 
 \begin{definition}
 \label{definition-hash-functions}
-  Given $r$, $c$, $p_1$, $p_2$, and $c > 1$, $p_1 < p_2$, a family $H = \{h \colon S \rightarrow U\}$ is said to be $(r, cr, p_1, p_2)$-sensitive for $(S, D)$ if for any $q,p \in S$ we have
+  Given $r$, $c$, $p_1$, $p_2$, and $c > 1$, $p_1 < p_2$, a family $H$ is said to be $(r, cr, p_1, p_2)$-sensitive for $(S, D)$ if for any $x, y \in S$ we have
 
   \begin{itemize}
-    \item if $D(p, q) \leq r$ then $Pr_H [h(q) = h(p)] \geq p_1$,
-    \item if $D(p, q) > cr$ then $Pr_H [h(q) = h(p)] \leq p_2$.
+    \item if $D(x, y) \leq r$ then $Pr_H [h(x) = h(y)] \geq p_1$,
+    \item if $D(x, y) > cr$ then $Pr_H [h(x) = h(y)] \leq p_2$.
   \end{itemize}
 \end{definition}
 
@@ -29,7 +29,7 @@ Here, $p_1$ is the lower bound on the probablity of close vectors colliding and 
 \subsection{Classic LSH}
 \label{background-classic-lsh}
 
-The classic LSH scheme for Hamming space uses a random bit sampling approach for picking a number of components from an input vector. This sample is then used as the key in a map structure, which will be referred to as a \textit{partition}, for locating a bucket that the vector should be stored in. The bits to sample for a given partition are chosen independently and uniformly at random and stored with the partition. When looking for the nearest neighbour of a query vector, this sampling is repeated and the candidate vectors are those found in the bucket that the sample maps to.
+The classic LSH family for Hamming space uses a random bit sampling approach for picking a number of components from an input vector. This sample is then used as the key in a map structure, which will be referred to as a \textit{partition}, for locating a bucket that the vector should be stored in. The bits to sample for a given partition are chosen independently and uniformly at random and stored with the partition. When looking for the nearest neighbour of a query vector, this sampling is repeated and the candidate vectors are those found in the bucket that the sample maps to.
 
 \begin{example}
 \label{example-classic-sampling}
@@ -51,9 +51,9 @@ Given a query vector $q = 1001$, we once again sample component 1 and 3, giving 
     01 & 10 & 11 \\
     };
 
-    \path [->] (u.south) edge ([yshift=0.5ex] m-1-1.north);
+    \path [->] (u.east) edge [bend left=30] ([yshift=0.5ex] m-1-1.north);
     \path [->] (v.south) edge ([yshift=0.5ex] m-1-2.north);
-    \path [->] (q.south) edge ([yshift=0.5ex, xshift=0.5ex] m-1-2.north);
+    \path [->] (q.west) edge [bend right=30] ([yshift=0.5ex, xshift=0.5ex] m-1-2.north);
   \end{tikzpicture}
 
   \caption{A graphical depiction of example \ref{example-classic-sampling}}
@@ -66,19 +66,25 @@ By adjusting the number of components sampled from vectors we can change the pro
 
 If we want to keep the same sample size, but still increase the chance of vectors colliding, then we need to use more than one partition. Every partition will then indenpently chose the bits to sample and the set of candidate vectors will be the union of the vectors found in buckets in each partition.
 
-\paragraph{Collision probabilities} By tweaking the sample size and the number of partitions to use, we can control the two probabilities $p_1$ and $p_2$ described in definition \ref{definition-hash-functions} \cite[p. 101]{DBLP:books/cu/LeskovecRU14}. By chosing a sample size $s$, the resulting probabilities will be $p_1' = p_1^s$ and  $p_2' = p_2^s$. On the other hand, by chosing a number of partitions 􏰄$b$, the resulting probabilities will be $p_1' = 1 - (1 - p_1)^b$ and $p_2' = 1 - (1 - p_2)^b􏰅$. By combining these, we get the probabilities $p_1' = 1 - (1 - p_1^s)^b$ and $p_2' = 1 - (1 - p_2^s)^b$. As such, both of these probabilities can be described by the equation $p = 1 - (1 - p^s)^b$, giving rise to what \cite[p. 89]{DBLP:books/cu/LeskovecRU14} calls the \textit{$S$-curve}:
+\paragraph{Collision probabilities} By tweaking the sample size and the number of partitions to use, we can control the two probabilities $p_1$ and $p_2$ described in definition \ref{definition-hash-functions} \cite[p. 101]{DBLP:books/cu/LeskovecRU14}. By chosing a sample size $k$, the resulting probabilities will be $p_1' = p_1^k$ and  $p_2' = p_2^k$. On the other hand, by chosing a number of partitions 􏰄$l$, the resulting probabilities will be $p_1' = 1 - (1 - p_1)^l$ and $p_2' = 1 - (1 - p_2)^l􏰅$. By combining these, we get the probabilities $p_1' = 1 - (1 - p_1^k)^l$ and $p_2' = 1 - (1 - p_2^k)^l$. As such, both of these probabilities can be described by the equation $p = 1 - (1 - p^k)^l$, giving rise to what \cite[p. 89]{DBLP:books/cu/LeskovecRU14} calls the \textit{$S$-curve}:
 
 \begin{figure}[ht]
   \begin{tikzpicture}
     \begin{axis}[xlabel = {Similarity of vectors}, ylabel = {Probability of collision}]
-      \addplot[domain = 0:1]{1 - (1 - x^5)^20};
+      \addplot[samples = 100, domain = 0:1]{1 - (1 - x^5)^20};
     \end{axis}
   \end{tikzpicture}
 
-  \caption{The $S$-curve for $s = 5$, $b = 20$}
+  \caption{The $S$-curve for $k = 5$, $l = 20$}
 \end{figure}
 
 \subsection{Covering LSH}
 \label{background-covering-lsh}
 
-\textit{To be written}
+Unlike the independently random bit sampling approach of classic LSH, covering LSH relies on a smarter sampling of correlated bits such that it can cover a given radius $r$. The difference between classic and covering LSH therefore lies in the family of hash functions used. The definition of a covering LSH family for Hamming space is given as follows in \cite{DBLP:journals/corr/PhamP16}:
+
+\begin{definition}
+  An LSH family $H$ is $r$-covering if for every two binary vectors $x, y \in \{0, 1\}^d$ with Hamming distance $D(x, y) \leq r$, there exists $h \in H$ such that $h(x) = h(y)$.
+\end{definition}
+
+A covering LSH family makes use of a random mapping $m \colon [d] \rightarrow \{0, 1\}^{r + 1}$ which constructs $d$ vectors, each consisting of $r + 1$ bits. This mapping is then used for constructing $2^{r + 1} - 1$ hash functions, or samplings, each associated with a different partition.

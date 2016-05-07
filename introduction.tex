@@ -1,7 +1,7 @@
 \section{Introduction}
 \label{introduction}
 
-Basing on IDC Research findings in 2015 90\% of the data accumulated by humanity was created in past two years. Basically we are in universe of ever growing datasets. Moreover data often is organized in high dimensional spaces. Techniques which we developed for the smaller spaces like 3D space we may find not scaling and falling facing increasing dimensionality. Memory and time needed to apply them might grow exponentially - this phenomenon is called "curse of dimensionality"
+Based on IDC Research findings, in 2015 90\% of the data accumulated by humanity was created over the past two years. As such, we are now in a universe of ever growing datasets. Moreover, data is often organized in high-dimensional space. Techniques which have been developed for smaller spaces, such as 3-dimensional space, often do not scale well in these high dimensionalities. The memory and time needed to apply them instead end up growing exponentially in the number of dimensions; this phenomenon is referred to as the \textit{curse of dimensionality}.
 
 An increasingly popular approach for tackling similarity search in high-dimensional datasets is the so-called \textit{locality-sensitive hashing} (\textit{LSH}) technique, first presented by Piotr Indyk and Rajeev Motwani \cite{DBLP:conf/stoc/IndykM98}. LSH has therefore already found itself useful in a wide range of practical applications:
 
@@ -16,6 +16,6 @@ An increasingly popular approach for tackling similarity search in high-dimensio
 
 The basic idea of LSH is to hash items to buckets in a way that provides a higher probability of similar items being hashed to the same bucket than dissimilar items. Items that then hash to the same bucket despite them being dissimilar are \textit{false positives}. On the other hand, similar items that never hash to the same bucket are \textit{false negatives} \cite[p. 88]{DBLP:books/cu/LeskovecRU14}. While false positives have no effect on the precision of queries, false negatives may cause the algorithm to never consider items that are in fact the most similar to a query item.
 
-\textit{Covering LSH} A recent paper by Rasmus Pagh \cite{DBLP:journals/corr/Pagh15} proposes an LSH scheme for Hamming space that completely does away with false negatives at a cost in efficiency. The purpose of our paper is to provide a generalised implementation of this LSH scheme and compare it with classic LSH.
+A recent paper by Rasmus Pagh \cite{DBLP:journals/corr/Pagh15} proposes an LSH scheme for Hamming space that completely does away with false negatives at a cost in efficiency. The purpose of our paper is to provide a generalised implementation of this LSH scheme, named \textit{covering LSH}, and compare it with classic LSH.
 
 \paragraph{Organisation} This paper is organised as follows: In section \ref{background} we provide the background for classic LSH, including how it works and its inherit drawbacks, and outline the covering LSH scheme and the gurantees that it provides. In section \ref{implementation} we describe our implementation of the two LSH schemes. In section \ref{evaluation} an experimental evaluation based on real data is made after which we compare the two LSH schemes.

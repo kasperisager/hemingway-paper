@@ -38,11 +38,11 @@ The classic LSH family for Hamming space uses a random bit sampling approach for
 
 \begin{example}
 \label{example-classic-sampling}
-Given input vector $v = 1101$, we randomly chose to sample component 1 and 3, giving us the key $v' = 10$. We then proceed to update our map structure with an entry for this key: $10 \rightarrow \{1101\}$
+  Given input vector $v = 1101$, we randomly chose to sample component 1 and 3, giving us the key $v' = 10$. We then proceed to update our map structure with an entry for this key: $10 \rightarrow \{1101\}$
 
-Given another input vector $u = 0110$, we again sample component 1 and 3, giving us the key $u' = 01$. We then add another entry to our map: $10 \rightarrow \{1101\}, 01 \rightarrow \{0110\}$.
+  Given another input vector $u = 0110$, we again sample component 1 and 3, giving us the key $u' = 01$. We then add another entry to our map: $10 \rightarrow \{1101\}, 01 \rightarrow \{0110\}$.
 
-Given a query vector $q = 1001$, we once again sample component 1 and 3, giving us the key $q' = 10$. We then look up this key in our map and receive the following set of candidates: $\{1101\}$.
+  Given a query vector $q = 1001$, we once again sample component 1 and 3, giving us the key $q' = 10$. We then look up this key in our map and receive the following set of candidates: $\{1101\}$.
 \end{example}
 
 \begin{figure}[ht]
@@ -92,4 +92,4 @@ Unlike the independently random bit sampling approach of classic LSH, covering L
   An LSH family $H$ is $r$-covering if for every two binary vectors $x, y \in \{0, 1\}^d$ with Hamming distance $D(x, y) \leq r$, there exists $h \in H$ such that $h(x) = h(y)$.
 \end{definition}
 
-A covering LSH family makes use of a random mapping $m \colon [d] \rightarrow \{0, 1\}^{r + 1}$ which constructs $d$ vectors, each consisting of $r + 1$ bits. This mapping is then used for constructing $2^{r + 1} - 1$ hash functions, or samplings, each associated with a different partition.
+A covering LSH family makes use of a random mapping $m \colon [d] \rightarrow \{0, 1\}^{r + 1}$ which constructs $d$ vectors, each consisting of $r + 1$ bits. This mapping is then used for constructing $2^{r + 1} - 1$ hash functions, or samplings, each associated with a different partition. In addition to the mapping, each function is associated

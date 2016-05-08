@@ -89,6 +89,7 @@ If we want to keep the same sample size, but still increase the chance of vector
 Unlike the independently random bit sampling approach of classic LSH, covering LSH relies on a smarter sampling of correlated bits such that it can cover a given radius $r$. The difference between classic and covering LSH therefore lies in the family of hash functions used. The definition of a covering LSH family for Hamming space is given as follows in \cite{DBLP:journals/corr/PhamP16}:
 
 \begin{definition}
+\label{definition-covering-family}
   An LSH family $H$ is $r$-covering if for every two binary vectors $x, y \in \{0, 1\}^d$ with Hamming distance $D(x, y) \leq r$, there exists $h \in H$ such that $h(x) = h(y)$.
 \end{definition}
 

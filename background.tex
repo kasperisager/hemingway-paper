@@ -75,7 +75,10 @@ If we want to keep the same sample size, but still increase the chance of vector
 
 \begin{figure}[ht]
   \begin{tikzpicture}
-    \begin{axis}[xlabel = {Similarity of vectors}, ylabel = {Probability of collision}]
+    \begin{axis}[
+      xlabel = {Similarity of vectors},
+      ylabel = {Probability of collision}
+    ]
       \addplot[samples = 100, domain = 0:1]{1 - (1 - x^5)^20};
     \end{axis}
   \end{tikzpicture}
@@ -93,4 +96,4 @@ Unlike the independently random bit sampling approach of classic LSH, covering L
   An LSH family $H$ is $r$-covering if for every two binary vectors $x, y \in \{0, 1\}^d$ with Hamming distance $D(x, y) \leq r$, there exists $h \in H$ such that $h(x) = h(y)$.
 \end{definition}
 
-A covering LSH family makes use of a random mapping $m \colon [d] \rightarrow \{0, 1\}^{r + 1}$ which constructs $d$ vectors, each consisting of $r + 1$ bits. This mapping is then used for constructing $2^{r + 1} - 1$ hash functions, or samplings, each associated with a different partition. In addition to the mapping, each function is associated
+A covering LSH family makes use of a random mapping $m \colon [d] \rightarrow \{0, 1\}^{r + 1}$ which constructs $d$ vectors, each consisting of $r + 1$ bits. This mapping is then used for constructing $2^{r + 1} - 1$ hash functions, or samplings, each associated with a different partition.

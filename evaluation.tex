@@ -1,5 +1,21 @@
 \section{Evaluation}
-The experiments were not conducted yet.  
+ \subsection{Data set}
+ Our dataset is the set called \textit{ANN\_IFT1M}\footnote{\url{http://corpus-texmex.irisa.fr/}}. Which is a set of 1,000,000 vectors
+ with dimensionality 128. Vectors are stored as raw little endians.
+ This dataset is created especially for measurements of the approximate nearest 
+neighbour searches.  
+ \subsection{Metrics}
+ \paragraph{Recall} Recall in information retrieval is the fraction of the data that are relevant to the query that are successfully retrieved.
+ \paragraph{Precision} Precision is the fraction of retrieved data that are relevant to the query. Calculated by given formula:
+ \paragraph{Time} We have three different speed metrics to compare:
+ \begin{itemize}
+  \item Construction time given in miliseconds. 
+  \item Insertion time given in nanoseconds.
+  \item Query time given in seconds.
+\end{itemize}
+ \paragraph{Memory consumptionl} Total amount of memory needed to create data structure and query it. Given in megabytes and gigabytes.
+ \subsection{Benchmark} For measuring our metrics we are using library called 
+ \textit{hayai}\footnote{\url{https://github.com/nickbruun/hayai}}, small C++ framework for writting benchmarks. It provides toolkit for measuring time, multiple runs and iterations.
+  \subsection{Test environment} 
+  Machine spec and software versions. 
 \label{evaluation}
-
-\textit{To be written}

@@ -5,15 +5,18 @@
  This dataset is created especially for measurements of the approximate nearest 
 neighbour searches.  
  \subsection{Metrics}
- \paragraph{Recall} Recall in information retrieval is the fraction of the data that are relevant to the query that are successfully retrieved.
- \paragraph{Precision} Precision is the fraction of retrieved data that are relevant to the query. Calculated by given formula:
- \paragraph{Time} We have three different speed metrics to compare:
+ \paragraph{Recall}Recall in information retrieval is the fraction of the data that are relevant to the query that are successfully retrieved.
+ \paragraph{Precision}Precision is the fraction of retrieved data that are relevant to the query. Calculated by given formula:
+\begin{equation}
+        precision = \frac{| \left\lbrace relevant\, points \right\rbrace \bigcap \left\lbrace retrieved\, points \right\rbrace | }{{| \left\lbrace retrieved\, points \right\rbrace |}}
+\end{equation}
+ \paragraph{Time}We have three different speed metrics to compare:
  \begin{itemize}
   \item Construction time given in miliseconds. 
   \item Insertion time given in nanoseconds.
   \item Query time given in seconds.
 \end{itemize}
- \paragraph{Memory consumptionl} Total amount of memory needed to create data structure and query it. Given in megabytes and gigabytes.
+ \paragraph{Memory consumption} Total amount of memory needed to create data structure and query it. Given in megabytes and gigabytes.
  \subsection{Benchmark} For measuring our metrics we are using library called 
  \textit{hayai}\footnote{\url{https://github.com/nickbruun/hayai}}, small C++ framework for writting benchmarks. It provides toolkit for measuring time, multiple runs and iterations.
   \subsection{Test environment} 

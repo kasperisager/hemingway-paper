@@ -35,3 +35,139 @@ Classic table is constructed with given parameters
 \end{itemize}
 
 Obviously the Covering table is also created with the same dimension parameter. Only difference is the radius parameter. Which is one of the most important test cases. We test it again radius of 2,3,4,5,6. Any higher values requires more superior hardware in terms of memory.
+
+\subsection{Results}
+
+\begin{figure}[h]
+  \begin{tikzpicture}
+    \begin{semilogyaxis}[
+      xlabel = {$r$},
+      ylabel = {Insertions per second},
+      xtick = data
+    ]
+      \addplot coordinates {
+        (2, 237736.94)
+        (3, 98187.51)
+        (4, 42593.97)
+        (5, 18074.10)
+      };
+
+      \addplot coordinates {
+        (2, 411106.15)
+        (3, 120359.67)
+        (4, 46280.57)
+        (5, 20693.81)
+      };
+
+      \addplot coordinates {
+        (2, 186131.05)
+        (3, 84934.71)
+        (4, 37573.59)
+        (5, 17047.07)
+      };
+
+      \legend{LSH $\delta = 0.01$, LSH $\delta = 0.001$, Covering Lsh}
+    \end{semilogyaxis}
+  \end{tikzpicture}
+\end{figure}
+
+\begin{figure}[h]
+  \begin{tikzpicture}
+    \begin{semilogyaxis}[
+      xlabel = {$r$},
+      ylabel = {Queries per second},
+      xtick = data
+    ]
+      \addplot coordinates {
+        (2, 6118.88)
+        (3, 4747.76)
+        (4, 2866.80)
+        (5, 1053.48)
+      };
+
+      \addplot coordinates {
+        (2, 526.67)
+        (3, 1103.17)
+        (4, 1247.75)
+        (5, 803.80)
+      };
+
+      \addplot coordinates {
+        (2, 58216.55)
+        (3, 22187.94)
+        (4, 10574.71)
+        (5, 3421.63)
+      };
+
+      \legend{LSH $\delta = 0.01$, LSH $\delta = 0.001$, Covering LSH}
+    \end{semilogyaxis}
+  \end{tikzpicture}
+\end{figure}
+
+\begin{figure}[h]
+  \begin{tikzpicture}
+    \begin{semilogyaxis}[
+      xlabel = {$r$},
+      ylabel = {Buckets per partition},
+      xtick = data,
+      legend pos = south east
+    ]
+      \addplot coordinates {
+        (2, 169815.43)
+        (3, 305179.47)
+        (4, 368261.81)
+        (5, 448140.33)
+      };
+
+      \addplot coordinates {
+        (2, 9310.57)
+        (3, 100652.33)
+        (4, 215357.87)
+        (5, 298153.22)
+      };
+
+      \addplot coordinates {
+        (2, 674554.00)
+        (3, 670221.60)
+        (4, 669083.68)
+        (5, 691636.11)
+      };
+
+      \legend{LSH $\delta = 0.01$, LSH $\delta = 0.001$, Covering LSH}
+    \end{semilogyaxis}
+  \end{tikzpicture}
+\end{figure}
+
+\begin{figure}[h]
+  \begin{tikzpicture}
+    \begin{axis}[
+      xlabel = {$r$},
+      ylabel = {False negatives per query},
+      xtick = data,
+      legend pos = north west
+    ]
+      \addplot coordinates {
+        (2, 0.0009)
+        (3, 0.0004)
+        (4, 0.0009)
+        (5, 0.0011)
+      };
+
+      \addplot coordinates {
+        (2, 0.0001)
+        (3, 0.0000)
+        (4, 0.0002)
+        (5, 0.0000)
+      };
+
+      \addplot coordinates {
+        (2, 0.0000)
+        (3, 0.0000)
+        (4, 0.0000)
+        (5, 0.0000)
+      };
+
+      \legend{LSH $\delta = 0.01$, LSH $\delta = 0.001$, Covering LSH}
+    \end{axis}
+  \end{tikzpicture}
+\end{figure}

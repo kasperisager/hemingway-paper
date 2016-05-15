@@ -3,6 +3,8 @@
 
 As touched upon in section \ref{introduction}, locality-sensitive hashing tackles the problem of similarity search in high-dimensional datasets by relaxing the requirement of finding exact nearest neighbours. Instead, LSH is used as an \textit{approximate} nearest neighbour algorithm, which inherently implies only probabilistic guarantees of finding a nearest neighbour. In general, LSH act as a randomized filter that attempt to reduce an input set to a subset of candidates for a given query item.
 
+The LSH schemes considered in this paper both operate in \textit{Hamming space}. A Hamming space $H(n, q)$ is defined as the set of all words of length $n$ over an alphabet of size $q$. A distance measure over a Hamming space is the number of letters in which two words differ. The alphabet that we consider for LSH is $\{0, 1\}$ and words are therefore bit vectors of length $n$. As such, the distance measure becomes the number of bits that differ between two vectors.
+
 The formal definition of the approximate nearest neighbour problem for Hamming space is given as follows in \cite{DBLP:journals/corr/PhamP16}:
 
 \begin{definition}
@@ -25,11 +27,6 @@ The data structure mentioned in definition \ref{definition-nearest-neighbour} ma
 \end{definition}
 
 Here, $p_1$ is the lower bound on the probablity of close vectors colliding and $p_2$ is the upper bound on the probability of distant vectors colliding \cite[p. 100]{DBLP:books/cu/LeskovecRU14}. As such, we want $p_1$ to be close to 1 whereas we want $p_2$ to be close to 0.
-
-\subsection{Hamming space}
-Hamming space can be defined over any alphabet (set) \textit{Q} as the set of words of a fixed length \textit{N} with letters from \textit{Q}. If \textit{Q} is a finite field, then a Hamming space over \textit{Q} is an \textit{N}-dimensional vector space over \textit{Q}.
-
-\textbf{Hamming distance} between two strings of equal length is the number of positions at which the corresponding symbols are different.
 
 \subsection{Classic LSH}
 \label{background-classic-lsh}

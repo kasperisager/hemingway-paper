@@ -1,38 +1,37 @@
 \section{Evaluation}
- \subsection{Data set}
- Our dataset is the set called \textit{ANN\_IFT1M}\footnote{\url{http://corpus-texmex.irisa.fr/}}. Which is a set of 1,000,000 vectors
- with dimensionality 128. Vectors are stored as raw little endians.
- This dataset is created especially for measurements of the approximate nearest 
-neighbour searches.  
- \subsection{Metrics}
- \paragraph{Recall}Recall in information retrieval is the fraction of the data that are relevant to the query that are successfully retrieved.
- \paragraph{Precision}Precision is the fraction of retrieved data that are relevant to the query.
- \paragraph{Time}We have three different speed metrics to compare:
- \begin{itemize}
-  \item Construction time given in milliseconds. 
+
+\subsection{Data set}
+
+Our dataset is the set called \textit{ANN\_IFT1M}\footnote{\url{http://corpus-texmex.irisa.fr/}}. Which is a set of 1,000,000 vectors with dimensionality 128. Vectors are stored as raw little endians. This dataset is created especially for measurements of the approximate nearest neighbour searches.
+
+\subsection{Metrics}
+
+\paragraph{Recall} Recall in information retrieval is the fraction of the data that are relevant to the query that are successfully retrieved.
+\paragraph{Precision} Precision is the fraction of retrieved data that are relevant to the query.
+\paragraph{Time} We have three different speed metrics to compare:
+
+\begin{itemize}
+  \item Construction time given in milliseconds.
   \item Insertion time given in nanoseconds.
   \item Query time given in seconds.
 \end{itemize}
- \paragraph{Memory consumption} Total amount of memory needed to create data structure and query it. Given in megabytes and gigabytes.
- \subsection{Benchmark} For measuring our metrics we are using library called 
- \textit{hayai}\footnote{\url{https://github.com/nickbruun/hayai}}, small C++ framework for writting benchmarks. It provides toolkit for measuring time, multiple runs and iterations.
-  \subsection{Test environment} 
-  Experiments were conducted on Intel i5 Processor with 8GB of RAM in 64 bit
-  operating system.  
-\label{evaluation}
-Our main idea is to compare and evaluate results of the two LSH implementations
-- the c 'covering' and classic one. To do so we first load all data set to our
-data structure. And then querying them 1500 times for random element. 
+
+\paragraph{Memory consumption} Total amount of memory needed to create data structure and query it. Given in megabytes and gigabytes.
+
+\subsection{Benchmark}
+
+For measuring our metrics we are using library called \textit{hayai}\footnote{\url{https://github.com/nickbruun/hayai}}, small C++ framework for writting benchmarks. It provides toolkit for measuring time, multiple runs and iterations.
+
+\subsection{Test environment}
+
+Experiments were conducted on Intel i5 Processor with 8GB of RAM in 64 bit operating system. Our main idea is to compare and evaluate results of the two LSH implementations - the c "covering" and classic one. To do so we first load all data set to our data structure. And then querying them 1500 times for random element.
 
 Classic table is constructed with given parameters
-\begin{itemize}
- \item dimension = 128
- \item samples = 32 (which denotes how many bits we are sampling)
- \item partitions = 64
-\end{itemize}
-Obviously the Covering table is also created with the same dimension parameter.
-Only difference is the radius parameter. Which is one of the most important test
-cases. We test it again radius of 2,3,4,5,6. Any higher values requires more
-superior hardware in terms of memory.
 
- 
+\begin{itemize}
+  \item dimension = 128
+  \item samples = 32 (which denotes how many bits we are sampling)
+  \item partitions = 64
+\end{itemize}
+
+Obviously the Covering table is also created with the same dimension parameter. Only difference is the radius parameter. Which is one of the most important test cases. We test it again radius of 2,3,4,5,6. Any higher values requires more superior hardware in terms of memory.

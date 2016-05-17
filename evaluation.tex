@@ -104,7 +104,13 @@ Figure ~\ref{fig:queries-per-second} presents throughput of each LSH. By the pro
 
 \subsubsection{Buckets per partition}
 
-Figure ~\ref{fig:buckets-per-partition} presents how many buckets per partition is created. This metric show how much Covering LSH differs from the classic one. Amount of buckets in classic implementations is dependent on the radius. Where the Covering is totally opposite - the buckets count is constant. It is connected to the way how the hash functions family are created [reference]. The trend presented on the plot is very similar to the one from figure ~\ref{fig:insertions-per-second}. Again by increasing the radius the gap is closing. But still the memory overhead is significantly bigger in the Covering that in classic LSH.
+Figure ~\ref{fig:buckets-per-partition} presents how many buckets per partition
+is created. This metric show how much Covering LSH differs from the classic one.
+Amount of buckets in classic implementations is dependent on the radius. Where
+the Covering is totally opposite - the buckets count is constant. It is
+connected to the way how the hash functions family are created, which is
+explained in Section ~\ref{table-covering-family}.The trend presented on the
+plot is very closely related  to the one from figure ~\ref{fig:insertions-per-second}. Again by increasing the radius the gap is closing. But still the memory overhead is significantly bigger in the Covering that in classic LSH.
 
 \begin{figure}[ht]
   \begin{tikzpicture}

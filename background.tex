@@ -3,9 +3,14 @@
 
 As touched upon in section \ref{introduction}, locality-sensitive hashing tackles the problem of similarity search in high-dimensional datasets by relaxing the requirement of finding exact nearest neighbours. Instead, LSH is used as an \textit{approximate} nearest neighbour algorithm, which inherently implies only probabilistic guarantees of finding a nearest neighbour. In general, LSH act as a randomized filter that attempt to reduce an input set to a subset of candidates for a given query item.
 
-The LSH schemes considered in this paper both operate in \textit{Hamming space}. A Hamming space $H(n, q)$ is defined as the set of all words of length $n$ over an alphabet of size $q$. A distance measure over a Hamming space is the number of letters in which two words differ. The alphabet that we consider for LSH is $\{0, 1\}$ and words are therefore bit vectors of length $n$. As such, the distance measure becomes the number of bits that differ between two vectors.
+The LSH schemes considered in this paper both operate in \textit{Hamming space}:
 
-The formal definition of the approximate nearest neighbour problem for Hamming space is given as follows in \cite{DBLP:journals/corr/PhamP16}:
+\begin{definition}
+\label{definition-hamming-space}
+  A Hamming space $H(n, q)$ is the set of all words of length $n$ over an alphabet of size $q$. A distance measure over a Hamming space is the number of letters in which two words differ.
+\end{definition}
+
+The alphabet that we consider for LSH is $\{0, 1\}$ and words are therefore bit vectors of length $n$. The formal definition of the approximate nearest neighbour problem for Hamming space is given as follows in \cite{DBLP:journals/corr/PhamP16}:
 
 \begin{definition}
 \label{definition-nearest-neighbour}

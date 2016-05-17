@@ -58,19 +58,21 @@ is forced to produce more buckets so one the insertion time increases.
 
 \paragraph{Buckets per partition}
 
-Figure XXC presents how many buckets per partition is created. This metric show
+Figure ~\ref{fig:bucketsPerPartition} presents how many buckets per partition is created. This metric show
 how much Covering Lsh differs from the classic one. Amount of buckets in classic
 implementations is dependent on the radius. Where the Covering is totally
 opposite - the buckets count is constant. It is connected to the way how the
 hash functions family are created [reference]. The trend presented on the plot
-is very similar to the one from Figure XXAS. Again by increasing the radius the
+is very similar to the one from Figure ~\ref{fig:insertionsPerSecondPlot}. Again by increasing the radius the
 gap is closing. But still the memory overhead is significantly bigger in the
 Covering that in classic lsh.
 
+\paragraph{False negatives per query}
 
+\paragraph{Buckets per partition}
 
 \begin{figure}[ht]
-  \begin{tikzpicture}
+    \begin{tikzpicture}
     \begin{semilogyaxis}[
       xlabel = {$r$},
       ylabel = {Insertions per second},
@@ -100,9 +102,9 @@ Covering that in classic lsh.
       \legend{LSH $\delta = 0.01$, LSH $\delta = 0.001$, Covering Lsh}
     \end{semilogyaxis}
   \end{tikzpicture}
+\label{fig:insertionsPerSecondPlot}
+\caption{Chart with comparision of insertion speed for LSH implementations}
 \end{figure}
-
-
 
 \begin{figure}[ht]
   \begin{tikzpicture}
@@ -135,9 +137,9 @@ Covering that in classic lsh.
       \legend{LSH $\delta = 0.01$, LSH $\delta = 0.001$, Covering LSH}
     \end{semilogyaxis}
   \end{tikzpicture}
+\label{fig:queriesPerSecond}
+\caption{Chart with comparision of queries speed for LSH implementations}
 \end{figure}
-
-\paragraph{Buckets per partition}
 
 \begin{figure}[ht]
   \begin{tikzpicture}
@@ -171,9 +173,9 @@ Covering that in classic lsh.
       \legend{LSH $\delta = 0.01$, LSH $\delta = 0.001$, Covering LSH}
     \end{semilogyaxis}
   \end{tikzpicture}
+\label{fig:bucketsPerPartition}
+\caption{Chart with comparision of amount of buckets per partition for LSH implementations}
 \end{figure}
-
-\paragraph{False negatives per query}
 
 \begin{figure}[ht]
   \begin{tikzpicture}
@@ -207,4 +209,6 @@ Covering that in classic lsh.
       \legend{LSH $\delta = 0.01$, LSH $\delta = 0.001$, Covering LSH}
     \end{axis}
   \end{tikzpicture}
+\label{fig:falseNegativesPerQuery}
+ \caption{Chart with amount of false negatives per query}
 \end{figure}

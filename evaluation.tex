@@ -76,6 +76,16 @@ Figure ~\ref{fig:insertions-per-second} presents how many insertions per second 
   \label{fig:insertions-per-second}
 \end{figure}
 
+\paragraph{Queries per second}
+Figure ~\ref{fig:queries-per-second} presents throughput of each LSH. By the
+problem definition we were suspecting that the Covering LSH trade off
+performance for guarantee of producing results begin free of false negatives.
+The result are rather surprising. Throughput of the Covering LSH is actually
+outclassing the Classic LSH. As far the radius comes one the performance drops
+but still maintains advantage over the Classic ones. By the current range of
+results we can expect that it scales better - trend of Covering and Classic
+$\delta = 0.001$ looks very similar but still the throughput of Covering is
+twice better.   
 \begin{figure}[ht]
   \begin{tikzpicture}
     \begin{semilogyaxis}[

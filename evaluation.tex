@@ -44,8 +44,30 @@ false negatives and correctness of received results.
 Most important is the radius parameter. Our test cases differs only in radius.
 Currently we test it against radius of 2,3,4,5. Any higher values requires more superior hardware in terms of memory.
 
-
 \subsection{Results}
+
+\paragraph{Insertions per second}
+
+Figure XX presents how many insertions per second are performed. 
+As we assumed and can conclude from figure XX  Covering Lsh has lowest performance due need of construction
+additional buckets. But the gap between Covering Lsh and the regular ones is
+relatively small and by the radius is increasing we can actually see that the
+result are coming closer. At the radius of 5 the difference is almost 3 times
+smaller than at the initial radius of 2. By increasing radius the classic LSH
+is forced to produce more buckets so one the insertion time increases. 
+
+\paragraph{Buckets per partition}
+
+Figure XXC presents how many buckets per partition is created. This metric show
+how much Covering Lsh differs from the classic one. Amount of buckets in classic
+implementations is dependent on the radius. Where the Covering is totally
+opposite - the buckets count is constant. It is connected to the way how the
+hash functions family are created [reference]. The trend presented on the plot
+is very similar to the one from Figure XXAS. Again by increasing the radius the
+gap is closing. But still the memory overhead is significantly bigger in the
+Covering that in classic lsh.
+
+
 
 \begin{figure}[ht]
   \begin{tikzpicture}
@@ -80,6 +102,8 @@ Currently we test it against radius of 2,3,4,5. Any higher values requires more 
   \end{tikzpicture}
 \end{figure}
 
+
+
 \begin{figure}[ht]
   \begin{tikzpicture}
     \begin{semilogyaxis}[
@@ -112,6 +136,8 @@ Currently we test it against radius of 2,3,4,5. Any higher values requires more 
     \end{semilogyaxis}
   \end{tikzpicture}
 \end{figure}
+
+\paragraph{Buckets per partition}
 
 \begin{figure}[ht]
   \begin{tikzpicture}
@@ -146,6 +172,8 @@ Currently we test it against radius of 2,3,4,5. Any higher values requires more 
     \end{semilogyaxis}
   \end{tikzpicture}
 \end{figure}
+
+\paragraph{False negatives per query}
 
 \begin{figure}[ht]
   \begin{tikzpicture}

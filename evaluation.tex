@@ -63,11 +63,20 @@ how much Covering Lsh differs from the classic one. Amount of buckets in classic
 implementations is dependent on the radius. Where the Covering is totally
 opposite - the buckets count is constant. It is connected to the way how the
 hash functions family are created [reference]. The trend presented on the plot
-is very similar to the one from Figure ~\ref{fig:insertionsPerSecondPlot}. Again by increasing the radius the
+is very similar to the one from Figure ~\ref{fig:insertionsPerSecond}. Again by increasing the radius the
 gap is closing. But still the memory overhead is significantly bigger in the
 Covering that in classic lsh.
 
 \paragraph{False negatives per query}
+
+The most important property of the Covering lsh is the fact that it guartees
+that the queries are not producing false negatives. Figure
+~\ref{fig:falseNegativesPerQuery}
+show the comparision of this metric between implementations. Obviously the
+covering holds zero false negatives in each case. More surprising are the
+results of the classic Lsh. Especially the $\delta = 0.001$ presents very low
+amount of false negatives across the cases. Next classic lsh is far worse than that - it
+has more false negatives in each case of $r$.
 
 \paragraph{Buckets per partition}
 
@@ -102,7 +111,7 @@ Covering that in classic lsh.
       \legend{LSH $\delta = 0.01$, LSH $\delta = 0.001$, Covering Lsh}
     \end{semilogyaxis}
   \end{tikzpicture}
-\label{fig:insertionsPerSecondPlot}
+\label{fig:insertionsPerSecond}
 \caption{Chart with comparision of insertion speed for LSH implementations}
 \end{figure}
 

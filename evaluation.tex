@@ -16,7 +16,7 @@ The benchmark performs a 1-NN search in each of three configured tables: A brute
 
 This dataset is created specifically for the evaluation of approximate nearest neighbour search algorithms and is a set of 1 million image feature vectors of 128 dimensions, plus an additional 10,000 query vectors. The version distributed alongside the MIH library is however binarized to vectors of 64 dimensions using LSH, which better suits the purpose of our evaluation.
 
-\paragraph{Parameters} Our choice of parameters follows that of the experiments carried out in \cite{DBLP:journals/corr/PhamP16}. That is, for a given radius $r$, we set the number of partitions to use in the classic table to $l = 2^{r + 1} - 1$ and the number of bits to sample to $k = 􏰢\frac{\log(1 - \delta^{1 / l})}{\log(1 - \frac{r}{d})}$.􏰣 The benchmark is run for both $\delta = 0.01$ and $\delta = 0.001$. For the covering table we just need the radius $r$. 
+\paragraph{Parameters} Our choice of parameters follows that of the experiments carried out in \cite{DBLP:journals/corr/PhamP16}. That is, for a given radius $r$, we set the number of partitions to use in the classic table to $l = 2^{r + 1} - 1$ and the number of bits to sample to $k = 􏰢\frac{\log(1 - \delta^{1 / l})}{\log(1 - \frac{r}{d})}$.􏰣 The benchmark is run for both $\delta = 0.01$ and $\delta = 0.001$. For the covering table we just need the radius $r$.
 
 \subsection{Results}
 

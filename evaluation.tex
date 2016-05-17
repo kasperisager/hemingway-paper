@@ -1,7 +1,7 @@
 \section{Evaluation}
 \label{evaluation}
 
-The following section will provide an evaluation of the two schemes based on an automated benchmark implemented as part of the C++ library. The benchmark measures the following metrics of each algorithm when run:
+The following section will provide an evaluation of the two schemes based on an automated benchmark implemented as part of the C++ library described in the previous section. The benchmark measures the following metrics of each LSH scheme:
 
 \begin{itemize}
   \item \textbf{Insertion throughput:} How many items can be inserted into the data structure per second?
@@ -10,15 +10,7 @@ The following section will provide an evaluation of the two schemes based on an 
   \item \textbf{False negative rate:} How many false negatives occur per query?
 \end{itemize}
 
-The dataset used for the evaluation is a pre-processed version of the \texttt{ANN\_SIFT1M} set distributed as part of the Multi Index Hashing (MIH) library located at \url{https://github.com/norouzi/mih}. This dataset is created specifically for the evaluation of approximate nearest neighbour search algorithms and is a set of 1 million image feature vectors of 128 dimensions. The version distributed alongside the MIH library is however binarized to vectors of 64 dimensions, which better suits the purpose of our evaluation.
-
-\subsection{Benchmark}
-
-For measuring our metrics we are using library called \textit{hayai}\footnote{\url{https://github.com/nickbruun/hayai}}, small C++ framework for building benchmarks. It provides toolkit for measuring time, multiple runs and iterations.
-
-\subsection{Test environment}
-
-Experiments were conducted on Intel i5 Processor with 8GB of RAM in 64 bit operating system.
+The dataset used for the evaluation is a pre-processed version of the \texttt{ANN\_SIFT1M} set distributed as part of the Multi Index Hashing (MIH) library located at \url{https://github.com/norouzi/mih}. This dataset is created specifically for the evaluation of approximate nearest neighbour search algorithms and is a set of 1 million image feature vectors of 128 dimensions, plus an additional 10,000 query vectors. The version distributed alongside the MIH library is however binarized to vectors of 64 dimensions using LSH, which better suits the purpose of our evaluation.
 
 \subsection{Test framework}
 
@@ -28,7 +20,9 @@ Most important is the radius parameter. Our test cases differs only in radius. C
 
 \subsection{Results}
 
-\paragraph{Insertions per second}
+The results were obtained by running the benchmark on a 2.8 GHz Intel Core i5 processor with a 3 MB L3 cache and 8 GB of DDR3 memory.
+
+\subsubsection{Insertions per second}
 
 Figure ~\ref{fig:insertions-per-second} presents how many insertions per second are performed. As we assumed and can conclude from figure XX  Covering LSH has lowest performance due need of construction additional buckets. But the gap between Covering LSH and the regular ones is relatively small and by the radius is increasing we can actually see that the result are coming closer. At the radius of 5 the difference is almost 3 times smaller than at the initial radius of 2. By increasing radius the classic LSH is forced to produce more buckets so one the insertion time increases.
 
@@ -68,7 +62,7 @@ Figure ~\ref{fig:insertions-per-second} presents how many insertions per second 
   \label{fig:insertions-per-second}
 \end{figure}
 
-\paragraph{Queries per second}
+\subsubsection{Queries per second}
 
 Figure ~\ref{fig:queries-per-second} presents throughput of each LSH. By the problem definition we were suspecting that the Covering LSH trade off performance for guarantee of producing results begin free of false negatives. The result are rather surprising. Throughput of the Covering LSH is actually outclassing the Classic LSH. As far the radius comes one the performance drops but still maintains advantage over the Classic ones. By the current range of results we can expect that it scales better - trend of Covering and Classic $\delta = 0.001$ looks very similar but still the throughput of Covering is twice better.
 
@@ -108,7 +102,7 @@ Figure ~\ref{fig:queries-per-second} presents throughput of each LSH. By the pro
   \label{fig:queries-per-second}
 \end{figure}
 
-\paragraph{Buckets per partition}
+\subsubsection{Buckets per partition}
 
 Figure ~\ref{fig:buckets-per-partition} presents how many buckets per partition is created. This metric show how much Covering LSH differs from the classic one. Amount of buckets in classic implementations is dependent on the radius. Where the Covering is totally opposite - the buckets count is constant. It is connected to the way how the hash functions family are created [reference]. The trend presented on the plot is very similar to the one from figure ~\ref{fig:insertions-per-second}. Again by increasing the radius the gap is closing. But still the memory overhead is significantly bigger in the Covering that in classic LSH.
 
@@ -149,7 +143,7 @@ Figure ~\ref{fig:buckets-per-partition} presents how many buckets per partition 
   \label{fig:buckets-per-partition}
 \end{figure}
 
-\paragraph{False negatives per query}
+\subsubsection{False negatives per query}
 
 The most important property of the Covering LSH is the fact that it guartees that the queries are not producing false negatives. Figure ~\ref{fig:false-negatives-per-query} show the comparision of this metric between implementations. Obviously the covering holds zero false negatives in each case. More surprising are the results of the classic LSH. Especially the $\delta = 0.001$ presents very low amount of false negatives across the cases. Next classic LSH is far worse than that; it has more false negatives in each case of $r$.
 

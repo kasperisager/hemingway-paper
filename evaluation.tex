@@ -10,17 +10,17 @@ The following section will provide an evaluation of the two schemes based on an 
   \item \textbf{False negative rate:} How many false negatives occur per query?
 \end{itemize}
 
-The dataset used for the evaluation is a pre-processed version of the \texttt{ANN\_SIFT1M} set distributed as part of the Multi Index Hashing (MIH) library located at \url{https://github.com/norouzi/mih}. This dataset is created specifically for the evaluation of approximate nearest neighbour search algorithms and is a set of 1 million image feature vectors of 128 dimensions, plus an additional 10,000 query vectors. The version distributed alongside the MIH library is however binarized to vectors of 64 dimensions using LSH, which better suits the purpose of our evaluation.
+The benchmark performs a 1-NN search in each of three configured tables: A brute force table, a classic table, and a covering table. The purpose of the brute force table is to establish the ground truth by locating the exact nearest neighbour for each of the query items. This ground truth is then used for determining if a false negative has been encountered for each of the query results in the classic and covering tables.
 
-\subsection{Test framework}
+\paragraph{Dataset} The dataset used for the evaluation is a pre-processed version of the \texttt{ANN\_SIFT1M} set distributed as part of the Multi Index Hashing (MIH) library located at \url{https://github.com/norouzi/mih}.
 
-Our main idea is to compare and evaluate results of the two LSH implementations - the "covering" and classic one. To do so we first load all data set to our data structure. And then querying them 1500 times for random element. Set of queries is generated upon and same for both sets. The additional overhead is a necessity of having results of each query. By brute force computation we are receiving exact results. Which we can utilize to track false negatives and correctness of received results.
+This dataset is created specifically for the evaluation of approximate nearest neighbour search algorithms and is a set of 1 million image feature vectors of 128 dimensions, plus an additional 10,000 query vectors. The version distributed alongside the MIH library is however binarized to vectors of 64 dimensions using LSH, which better suits the purpose of our evaluation.
 
-Most important is the radius parameter. Our test cases differs only in radius. Currently we test it against radius of 2,3,4,5. Any higher values requires more superior hardware in terms of memory.
+\paragraph{Parameters} Our choice of parameters follows that of the experiments carried out in \cite{DBLP:journals/corr/PhamP16}. That is, for a given radius $r$, we set the number of partitions to use in the classic table to $l = 2^{r + 1} - 1$ and the number of bits to sample to $k = 􏰢\frac{\log(1 - \delta^{1 / l})}{\log(1 - \frac{r}{d})}$.􏰣 The benchmark is run for both $\delta = 0.01$ and $\delta = 0.001$. For the covering table we just need the radius $r$. 
 
 \subsection{Results}
 
-The results were obtained by running the benchmark on a 2.8 GHz Intel Core i5 processor with a 3 MB L3 cache and 8 GB of DDR3 memory.
+The results were obtained by running the benchmark on a 2.8 GHz Intel Core i5 processor with a 3 MB L3 cache and 8 GB of DDR3 memory. Due to the limited amount of memory available, we have only been able to provide results for $r \in \{2,\ldots,5\}$.
 
 \subsubsection{Insertions per second}
 

@@ -17,7 +17,7 @@ The alphabet that we consider for LSH is $\{0, 1\}$ and words are therefore bit 
   Given a set $S \subset \{0, 1\}^d$, $|S| = n$, the Hamming distance function $D$, and parameters $r > 0$, $c > 1$, $\delta > 0$, construct a data structure such that, given any query $q \in \{0,1\}^d$, if there exists a point $x \in S$ and $D(x, q) \leq r$, it reports some point $y \in S$ where $D(y, q) \leq cr$ with probability $1 - \delta$.
 \end{definition}
 
-Here, $\delta$ defines the rate of occurences of false negatives.
+Here, $\delta$ defines the rate of occurrences of false negatives.
 
 The data structure mentioned in definition \ref{definition-nearest-neighbour} makes use of a family of \textit{locality-sensitive hash functions} in order to hash items to buckets. The definition of this family is given as follows in \cite{DBLP:conf/stoc/IndykM98}:
 
@@ -31,7 +31,7 @@ The data structure mentioned in definition \ref{definition-nearest-neighbour} ma
   \end{itemize}
 \end{definition}
 
-Here, $p_1$ is the lower bound on the probablity of close vectors colliding and $p_2$ is the upper bound on the probability of distant vectors colliding \cite[p. 100]{DBLP:books/cu/LeskovecRU14}. As such, we want $p_1$ to be close to 1 whereas we want $p_2$ to be close to 0.
+Here, $p_1$ is the lower bound on the probability of close vectors colliding and $p_2$ is the upper bound on the probability of distant vectors colliding \cite[p. 100]{DBLP:books/cu/LeskovecRU14}. As such, we want $p_1$ to be close to 1 whereas we want $p_2$ to be close to 0.
 
 \subsection{Classic LSH}
 \label{background-classic-lsh}
@@ -71,9 +71,9 @@ As can be seen in example \ref{example-classic-sampling}, $v$ and $u$ are not pa
 
 By adjusting the number of components sampled from vectors we can change the probability of collisions happening in the data structure. That is, by increasing the sample size we decrease the chance of vectors colliding, and vice versa, as more components would then have to match in order for a collision to happen.
 
-If we want to keep the same sample size, but still increase the chance of vectors colliding, then we need to use more than one partition. Every partition will then indenpently chose the bits to sample and the set of candidate vectors will be the union of the vectors found in buckets in each partition.
+If we want to keep the same sample size, but still increase the chance of vectors colliding, then we need to use more than one partition. Every partition will then independently chose the bits to sample and the set of candidate vectors will be the union of the vectors found in buckets in each partition.
 
-\paragraph{Collision probabilities} By tweaking the sample size and the number of partitions to use, we can control the two probabilities $p_1$ and $p_2$ described in definition \ref{definition-hash-functions} \cite[p. 101]{DBLP:books/cu/LeskovecRU14}. By chosing a sample size $k$, the resulting probabilities will be $p_1' = p_1^k$ and  $p_2' = p_2^k$. On the other hand, by chosing a number of partitions 􏰄$l$, the resulting probabilities will be $p_1' = 1 - (1 - p_1)^l$ and $p_2' = 1 - (1 - p_2)^l􏰅$. By combining these, we get the probabilities $p_1' = 1 - (1 - p_1^k)^l$ and $p_2' = 1 - (1 - p_2^k)^l$. As such, both of these probabilities can be described by the equation $p = 1 - (1 - p^k)^l$, giving rise to what \cite[p. 89]{DBLP:books/cu/LeskovecRU14} calls the \textit{$S$-curve}:
+\paragraph{Collision probabilities} By tweaking the sample size and the number of partitions to use, we can control the two probabilities $p_1$ and $p_2$ described in definition \ref{definition-hash-functions} \cite[p. 101]{DBLP:books/cu/LeskovecRU14}. By choosing a sample size $k$, the resulting probabilities will be $p_1' = p_1^k$ and  $p_2' = p_2^k$. On the other hand, by choosing a number of partitions 􏰄$l$, the resulting probabilities will be $p_1' = 1 - (1 - p_1)^l$ and $p_2' = 1 - (1 - p_2)^l􏰅$. By combining these, we get the probabilities $p_1' = 1 - (1 - p_1^k)^l$ and $p_2' = 1 - (1 - p_2^k)^l$. As such, both of these probabilities can be described by the equation $p = 1 - (1 - p^k)^l$, giving rise to what \cite[p. 89]{DBLP:books/cu/LeskovecRU14} calls the \textit{$S$-curve}:
 
 \begin{figure}[ht]
   \begin{tikzpicture}

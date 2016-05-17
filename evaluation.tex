@@ -16,69 +16,29 @@ Our dataset is the set called \textit{ANN\_IFT1M}\footnote{\url{http://corpus-te
 \end{itemize}
 
 \paragraph{False negatives} Amount of false negatives for query.
-\paragraph{Buckets per partition}  
+\paragraph{Buckets per partition}
 
 \paragraph{Memory consumption} Total amount of memory needed to create data structure and query it. Given in megabytes and gigabytes.
 
 \subsection{Benchmark}
 
-For measuring our metrics we are using library called
-\textit{hayai}\footnote{\url{https://github.com/nickbruun/hayai}}, small C++
-framework for building benchmarks. It provides toolkit for measuring time, multiple runs and iterations.
+For measuring our metrics we are using library called \textit{hayai}\footnote{\url{https://github.com/nickbruun/hayai}}, small C++ framework for building benchmarks. It provides toolkit for measuring time, multiple runs and iterations.
 
 \subsection{Test environment}
 
-Experiments were conducted on Intel i5 Processor with 8GB of RAM in 64 bit
-operating system. 
+Experiments were conducted on Intel i5 Processor with 8GB of RAM in 64 bit operating system.
 
 \subsection{Test framework}
 
-Our main idea is to compare and evaluate results of the two
-LSH implementations - the "covering" and classic one. To do so we first load all
-data set to our data structure. And then querying them 1500 times for random
-element. Set of queries is generated upon and same for both sets. The
-additional overhead is a necessity of having results of each query. By brute
-force computation we are receiving exact results. Which we can utilize to track
-false negatives and correctness of received results.
+Our main idea is to compare and evaluate results of the two LSH implementations - the "covering" and classic one. To do so we first load all data set to our data structure. And then querying them 1500 times for random element. Set of queries is generated upon and same for both sets. The additional overhead is a necessity of having results of each query. By brute force computation we are receiving exact results. Which we can utilize to track false negatives and correctness of received results.
 
-Most important is the radius parameter. Our test cases differs only in radius.
-Currently we test it against radius of 2,3,4,5. Any higher values requires more superior hardware in terms of memory.
+Most important is the radius parameter. Our test cases differs only in radius. Currently we test it against radius of 2,3,4,5. Any higher values requires more superior hardware in terms of memory.
 
 \subsection{Results}
 
 \paragraph{Insertions per second}
 
-Figure XX presents how many insertions per second are performed. 
-As we assumed and can conclude from figure XX  Covering Lsh has lowest performance due need of construction
-additional buckets. But the gap between Covering Lsh and the regular ones is
-relatively small and by the radius is increasing we can actually see that the
-result are coming closer. At the radius of 5 the difference is almost 3 times
-smaller than at the initial radius of 2. By increasing radius the classic LSH
-is forced to produce more buckets so one the insertion time increases. 
-
-\paragraph{Buckets per partition}
-
-Figure ~\ref{fig:bucketsPerPartition} presents how many buckets per partition is created. This metric show
-how much Covering Lsh differs from the classic one. Amount of buckets in classic
-implementations is dependent on the radius. Where the Covering is totally
-opposite - the buckets count is constant. It is connected to the way how the
-hash functions family are created [reference]. The trend presented on the plot
-is very similar to the one from Figure ~\ref{fig:insertionsPerSecond}. Again by increasing the radius the
-gap is closing. But still the memory overhead is significantly bigger in the
-Covering that in classic lsh.
-
-\paragraph{False negatives per query}
-
-The most important property of the Covering lsh is the fact that it guartees
-that the queries are not producing false negatives. Figure
-~\ref{fig:falseNegativesPerQuery}
-show the comparision of this metric between implementations. Obviously the
-covering holds zero false negatives in each case. More surprising are the
-results of the classic Lsh. Especially the $\delta = 0.001$ presents very low
-amount of false negatives across the cases. Next classic lsh is far worse than that - it
-has more false negatives in each case of $r$.
-
-\paragraph{Buckets per partition}
+Figure ~\ref{fig:insertions-per-second} presents how many insertions per second are performed. As we assumed and can conclude from figure XX  Covering Lsh has lowest performance due need of construction additional buckets. But the gap between Covering Lsh and the regular ones is relatively small and by the radius is increasing we can actually see that the result are coming closer. At the radius of 5 the difference is almost 3 times smaller than at the initial radius of 2. By increasing radius the classic LSH is forced to produce more buckets so one the insertion time increases.
 
 \begin{figure}[ht]
     \begin{tikzpicture}
@@ -111,8 +71,9 @@ has more false negatives in each case of $r$.
       \legend{LSH $\delta = 0.01$, LSH $\delta = 0.001$, Covering Lsh}
     \end{semilogyaxis}
   \end{tikzpicture}
-\label{fig:insertionsPerSecond}
-\caption{Chart with comparision of insertion speed for LSH implementations}
+
+  \caption{Comparision of insertion throughput}
+  \label{fig:insertions-per-second}
 \end{figure}
 
 \begin{figure}[ht]
@@ -146,9 +107,14 @@ has more false negatives in each case of $r$.
       \legend{LSH $\delta = 0.01$, LSH $\delta = 0.001$, Covering LSH}
     \end{semilogyaxis}
   \end{tikzpicture}
-\label{fig:queriesPerSecond}
-\caption{Chart with comparision of queries speed for LSH implementations}
+
+  \caption{Comparision of query throughput}
+  \label{fig:queries-per-second}
 \end{figure}
+
+\paragraph{Buckets per partition}
+
+Figure ~\ref{fig:buckets-per-partition} presents how many buckets per partition is created. This metric show how much Covering Lsh differs from the classic one. Amount of buckets in classic implementations is dependent on the radius. Where the Covering is totally opposite - the buckets count is constant. It is connected to the way how the hash functions family are created [reference]. The trend presented on the plot is very similar to the one from figure ~\ref{fig:insertions-per-second}. Again by increasing the radius the gap is closing. But still the memory overhead is significantly bigger in the Covering that in classic lsh.
 
 \begin{figure}[ht]
   \begin{tikzpicture}
@@ -182,9 +148,14 @@ has more false negatives in each case of $r$.
       \legend{LSH $\delta = 0.01$, LSH $\delta = 0.001$, Covering LSH}
     \end{semilogyaxis}
   \end{tikzpicture}
-\label{fig:bucketsPerPartition}
-\caption{Chart with comparision of amount of buckets per partition for LSH implementations}
+
+  \caption{Comparision of bucket distribution}
+  \label{fig:buckets-per-partition}
 \end{figure}
+
+\paragraph{False negatives per query}
+
+The most important property of the Covering lsh is the fact that it guartees that the queries are not producing false negatives. Figure ~\ref{fig:false-negatives-per-query} show the comparision of this metric between implementations. Obviously the covering holds zero false negatives in each case. More surprising are the results of the classic Lsh. Especially the $\delta = 0.001$ presents very low amount of false negatives across the cases. Next classic lsh is far worse than that; it has more false negatives in each case of $r$.
 
 \begin{figure}[ht]
   \begin{tikzpicture}
@@ -218,6 +189,7 @@ has more false negatives in each case of $r$.
       \legend{LSH $\delta = 0.01$, LSH $\delta = 0.001$, Covering LSH}
     \end{axis}
   \end{tikzpicture}
-\label{fig:falseNegativesPerQuery}
- \caption{Chart with amount of false negatives per query}
+
+  \caption{Comparison of false negative rates}
+  \label{fig:false-negatives-per-query}
 \end{figure}

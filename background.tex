@@ -10,18 +10,18 @@ The LSH schemes considered in this paper both operate in so-called \textit{Hammi
   A Hamming space $H(d, a)$ is the set of all words of length $d$ over an alphabet of size $a$. A distance measure over a Hamming space is the number of letters in which two words differ.
 \end{definition}
 
-The alphabet that we consider for LSH is $\{0, 1\}$ and words are therefore bit vectors of $d$ dimensions. The formal definition of the approximate nearest neighbour problem for Hamming space is given as follows in \cite{DBLP:journals/corr/PhamP16}:
+The alphabet that we consider for LSH is $\{0, 1\}$ and words are therefore bit vectors of $d$ dimensions. The definition of the approximate nearest neighbour problem for Hamming space is given as follows in \cite{DBLP:journals/corr/PhamP16}:
 
 \begin{definition}
 \label{definition-nearest-neighbour}
-  Given a set $S \subset \{0, 1\}^d$, $|S| = n$, the Hamming distance function $D$, and parameters $r > 0$, $c > 1$, $\delta > 0$, construct a data structure such that, given any query $q \in \{0,1\}^d$, if there exists a point $x \in S$ and $D(x, q) \leq r$, it reports some point $y \in S$ where $D(y, q) \leq cr$ with probability $1 - \delta$.
+  Given a set of vectors of dimensionality $d$ $Z \subset \{0, 1\}^d$, $|Z| = n$, the Hamming distance function $D$, a radius $r > 0$, an approximation factor $c > 1$, and a false negative rate $\delta > 0$, construct a data structure such that, given any query $q \in \{0,1\}^d$, if there exists $x \in Z$ and $D(x, q) \leq r$, it reports some $y \in Z$ where $D(y, q) \leq cr$ with probability $1 - \delta$.
 \end{definition}
 
 The data structure mentioned in definition ~\ref{definition-nearest-neighbour} makes use of a family of \textit{locality-sensitive hash functions} in order to hash items to buckets. The definition of this family is given as follows in \cite{DBLP:conf/stoc/IndykM98}:
 
 \begin{definition}
 \label{definition-hash-functions}
-  Given $r$, $c$, $p_1$, $p_2$, and $r > 0$, $c > 1$, $p_1 < p_2$, a family $H$ is said to be $(r, cr, p_1, p_2)$-sensitive for $(S, D)$ if for any $x, y \in S$ we have
+  Given $r$, $c$, and probabilities $p_1$ and $p_2$ where $p_1 < p_2$, a family $H$ is said to be $(r, cr, p_1, p_2)$-sensitive for $(Z, D)$ if for any $x, y \in Z$ we have
 
   \begin{itemize}
     \item if $D(x, y) \leq r$ then $Pr_H [h(x) = h(y)] \geq p_1$,
@@ -29,7 +29,7 @@ The data structure mentioned in definition ~\ref{definition-nearest-neighbour} m
   \end{itemize}
 \end{definition}
 
-Here, $p_1$ is the lower bound on the probability of close vectors colliding and $p_2$ is the upper bound on the probability of distant vectors colliding \cite[p. 100]{DBLP:books/cu/LeskovecRU14}. As such, we want $p_1$ to be close to 1 whereas we want $p_2$ to be close to 0.
+Here, $p_1$ is the lower bound on the probability of close vectors colliding and $p_2$ is the upper bound on the probability of distant vectors colliding \cite[p. 100]{DBLP:books/cu/LeskovecRU14}. We therefore want $p_1$ to be close to 1 and $p_2$ to be close to 0.
 
 \subsection{Classic LSH}
 \label{background-classic-lsh}
@@ -71,7 +71,7 @@ By adjusting the number of components sampled from vectors we can change the pro
 
 If we want to keep the same sample size, but still increase the chance of vectors colliding, then we need to use more than one partition. Every partition will then independently chose the bits to sample and the set of candidate vectors will be the union of the vectors found in buckets in each partition.
 
-\paragraph{Collision probabilities} By tweaking the sample size and the number of partitions to use, we can control the two probabilities $p_1$ and $p_2$ described in definition ~\ref{definition-hash-functions} \cite[p. 101]{DBLP:books/cu/LeskovecRU14}. By choosing a sample size $k$, the resulting probabilities will be $p_1' = p_1^k$ and  $p_2' = p_2^k$. On the other hand, by choosing a number of partitions 􏰄$l$, the resulting probabilities will be $p_1' = 1 - (1 - p_1)^l$ and $p_2' = 1 - (1 - p_2)^l􏰅$. By combining these, we get the probabilities $p_1' = 1 - (1 - p_1^k)^l$ and $p_2' = 1 - (1 - p_2^k)^l$. As such, both of these probabilities can be described by the equation $p = 1 - (1 - p^k)^l$, giving rise to what \cite[p. 89]{DBLP:books/cu/LeskovecRU14} calls the \textit{$S$-curve}:
+\paragraph{Collision probabilities} By tweaking the sample size and the number of partitions to use, we can control the two probabilities $p_1$ and $p_2$ described in definition ~\ref{definition-hash-functions} \cite[p. 101]{DBLP:books/cu/LeskovecRU14}. By choosing a sample size $k$, the resulting probabilities will be $p_1^k$ and  $p_2^k$. On the other hand, by choosing a number of partitions 􏰄$l$, the resulting probabilities will be $1 - (1 - p_1)^l$ and $1 - (1 - p_2)^l􏰅$. By combining these, we get the probabilities $1 - (1 - p_1^k)^l$ and $1 - (1 - p_2^k)^l$, giving rise to what \cite[p. 89]{DBLP:books/cu/LeskovecRU14} calls the \textit{$S$-curve}:
 
 \begin{figure}[ht]
   \begin{tikzpicture}
@@ -93,7 +93,7 @@ Unlike the independently random bit sampling approach of classic LSH, covering L
 
 \begin{definition}
 \label{definition-covering-family}
-  An LSH family $H$ is $r$-covering if for every two binary vectors $x, y \in \{0, 1\}^d$ with Hamming distance $D(x, y) \leq r$, there exists $h \in H$ such that $h(x) = h(y)$.
+  An LSH family $H$ is $r$-covering if for every two binary vectors $x, y \in \{0, 1\}^d$ with $D(x, y) \leq r$, there exists $h \in H$ such that $h(x) = h(y)$.
 \end{definition}
 
 A covering LSH family makes use of a random mapping $m \colon [d] \rightarrow \{0, 1\}^{r + 1}$ which constructs $d$ vectors, each consisting of $r + 1$ bits. This mapping is then used for constructing $2^{r + 1} - 1$ hash functions, or samplings, each associated with a different partition. In addition, each hash function is associated with a vector representation of $v \in \{1, \ldots, 2^{r + 1} - 1\}$. The bits to sample for each function in the family is determined by computing for each bit $b \in \{1, \ldots, d\}$, $m(b) \cdot v \bmod 2$, i.e. the dot product modulo 2 of $m(b)$ and $v$. If the result is 1, then the $b$th bit should be sampled.

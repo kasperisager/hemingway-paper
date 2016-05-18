@@ -21,7 +21,7 @@ The data structure mentioned in definition ~\ref{definition-nearest-neighbour} m
 
 \begin{definition}
 \label{definition-hash-functions}
-  Given $r$, $c$, and probabilities $p_1$ and $p_2$ where $p_1 < p_2$, a family $H$ is said to be $(r, cr, p_1, p_2)$-sensitive for $(Z, D)$ if for any $x, y \in Z$ we have
+  Given $r > 0$, $c > 1$, and probabilities $p_1$ and $p_2$ where $p_1 < p_2$, a family $H$ is said to be $(r, cr, p_1, p_2)$-sensitive for $(Z, D)$ if for any $x, y \in Z$ we have
 
   \begin{itemize}
     \item if $D(x, y) \leq r$ then $Pr_H [h(x) = h(y)] \geq p_1$,

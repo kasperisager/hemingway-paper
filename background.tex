@@ -1,9 +1,9 @@
 \section{Background}
 \label{background}
 
-As touched upon in section \ref{introduction}, locality-sensitive hashing tackles the problem of similarity search in high-dimensional datasets by relaxing the requirement of finding exact nearest neighbours. Instead, LSH is used as an \textit{approximate} nearest neighbour algorithm, which inherently implies only probabilistic guarantees of finding a nearest neighbour. In general, LSH act as a randomized filter that attempt to reduce an input set to a subset of candidates for a given query item.
+As touched upon in section \ref{introduction}, locality-sensitive hashing tackles the problem of similarity search in high-dimensional datasets by relaxing the requirement of finding exact nearest neighbours. Instead, LSH is used as an \textit{approximate} nearest neighbour algorithm, which inherently implies only probabilistic guarantees of finding a nearest neighbour. In general, LSH act as a randomized filter that attempts to reduce an input set to a subset of candidates for a given query item.
 
-The LSH schemes considered in this paper both operate in \textit{Hamming space}:
+The LSH schemes considered in this paper both operate in so-called \textit{Hamming space}:
 
 \begin{definition}
 \label{definition-hamming-space}
@@ -98,7 +98,7 @@ Unlike the independently random bit sampling approach of classic LSH, covering L
   An LSH family $H$ is $r$-covering if for every two binary vectors $x, y \in \{0, 1\}^d$ with Hamming distance $D(x, y) \leq r$, there exists $h \in H$ such that $h(x) = h(y)$.
 \end{definition}
 
-A covering LSH family makes use of a random mapping $m \colon [d] \rightarrow \{0, 1\}^{r + 1}$ which constructs $d$ vectors, each consisting of $r + 1$ bits. This mapping is then used for constructing $2^{r + 1} - 1$ hash functions, or samplings, each associated with a different partition. In addition, each hash function is associated with a vector representation of $v \in \{1, \ldots, 2^{r + 1} - 1\}$. The bits to sample for each function in the family is determined by computing for each bit $b \in \{1, \ldots, d\}$, $m(b) \cdot v \bmod 2$, i.e. the dot product modulo 2 of the $m(b)$ and $v$. If the result is 1, then the $b$th bit should be sampled.
+A covering LSH family makes use of a random mapping $m \colon [d] \rightarrow \{0, 1\}^{r + 1}$ which constructs $d$ vectors, each consisting of $r + 1$ bits. This mapping is then used for constructing $2^{r + 1} - 1$ hash functions, or samplings, each associated with a different partition. In addition, each hash function is associated with a vector representation of $v \in \{1, \ldots, 2^{r + 1} - 1\}$. The bits to sample for each function in the family is determined by computing for each bit $b \in \{1, \ldots, d\}$, $m(b) \cdot v \bmod 2$, i.e. the dot product modulo 2 of $m(b)$ and $v$. If the result is 1, then the $b$th bit should be sampled.
 
 \begin{example}
 \label{example-covering-family}

@@ -1,37 +1,37 @@
 \section{Implementation}
 \label{implementation}
 
-A library implementing both the classic and covering LSH schemes as described in the previous section has been developed in order to facilitate an experimental evaluation of the two. The library has been released as open-source software and is available at \url{https://github.com/kasperisager/hemingway}. C++ was chosen as the implementation language as it balances performance with higher-level constructs that help ensure a safe and succinct implementation. The library is fairly simple in that it only exposes two classes: One for representing bit vectors and one for representing the actual LSH data structure.
+A library implementing both the classic and covering LSH schemes, as described in section \ref{background}, has been developed in order to facilitate an experimental evaluation of the two schemes. The library has been released as open-source software and is available at \url{https://github.com/kasperisager/hemingway}. C++ was chosen as the implementation language as it balances performance with higher-level constructs that help ensure a safe and succinct implementation. The library is fairly simple in that it only exposes two classes: One for representing bit vectors and one for representing the actual LSH data structure.
 
 \subsection{Vector}
 
-The vector class provides an efficient bit vector representation that allows for arbitrarily large dimensionality by storing bit components in a variable number of 32-bit unsigned integer chunks. This representation effectively supports all the operations needed by the LSH schemes:
+The vector class provides an efficient bit vector representation that allows for arbitrarily large dimensionality by storing bit components in a variable number of 32-bit integer chunks. This representation effectively supports all the operations needed by the LSH schemes:
 
 \begin{itemize}
-  \item Random access in $O(1)$
-  \item Distance computing in $O(c)$
-  \item Dot product computing in $O(c)$
-  \item Equality checking in $O(c)$
-  \item Hash computing in $O(c)$
-  \item Bitwise AND in $O(c)$
+  \item Random access in $\mathcal{O}(1)$
+  \item Distance computing in $\mathcal{O}(c)$
+  \item Dot product computing in $\mathcal{O}(c)$
+  \item Equality checking in $\mathcal{O}(c)$
+  \item Hash computing in $\mathcal{O}(c)$
+  \item Bitwise AND in $\mathcal{O}(c)$
 \end{itemize}
 
-Here $c$ denotes the number of component chunks in a vector. The time complexity of each operation has been listed in order to justify the comparison between the two LSH schemes; as can be seen, no vector operation poses a bottleneck for neither scheme.
+Here, $c$ denotes the number of component chunks in a vector. The time complexity of each operation has been listed in order to justify the comparison between the two LSH schemes; as can be seen, no vector operation poses a bottleneck for neither scheme.
 
 \paragraph{Equality and hash} The equality and hash operations are used for interoperation with the hash-based data structures of the C++ standard library. As such, they are not related to the concept of hashing in LSH.
 
 \paragraph{Bitwise AND} The bitwise AND operation is used for performing the bit sampling described in section \ref{background}. For example, to sample bit 1 and 3 of a vector $v = 1101$, we construct a separate vector \textit{mask} $u = 1010$, i.e. a vector with bit 1 and 3 set. The key is then be the bitwise AND of $v$ and $u$, $1101 \wedge 1010 = 1000$. As can be seen, this is analogous to the key $v' = 10$ from example \ref{example-classic-sampling} when bit 2 and 4 are removed.
 
-\paragraph{Population counts} It is assumed in \cite{DBLP:journals/corr/Pagh15} that population counts, i.e. the number of 1s in a set of bits, can be counted in $O(1)$. The \texttt{\_\_builtin\_popcount}\footnote{\url{https://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html}} intrinsic supports this and is used in the library, hence complexity $O(c)$ of the distance, equality, dot product, and bitwise AND operations.
+\paragraph{Population counts} It is assumed in \cite{DBLP:journals/corr/Pagh15} that population counts, i.e. the number of 1s in a set of bits, can be counted in $\mathcal{O}(1)$. The \texttt{\_\_builtin\_popcount}\footnote{\url{https://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html}} intrinsic supports this and is used in the library, hence complexity $\mathcal{O}(c)$ of the distance, equality, dot product, and bitwise AND operations.
 
 \subsection{Table}
 
-The table class provides a representation of the LSH data structure itself and is initialized by supplying a configuration for either the classic or covering LSH scheme. In the case of classic LSH, the number of bits to sample from vectors and the number of partitions to use are specified. In the case of covering LSH, the radius to cover is specified.
+The table class provides a representation of the LSH data structure itself and is constructed by supplying a configuration for either the classic or covering LSH scheme. In the case of classic LSH, the number of bits to sample from vectors and the number of partitions to use are specified. In the case of covering LSH, the radius to cover is specified.
 
 When configuring the table, the notion of the parameters $r$, $c$, and $\delta$ from definition \ref{definition-nearest-neighbour} is by design left out. The onus of picking parameters appropriate for a given input set and use case is therefore on the client of the library. As a consequence, the data structure also doesn't require specifying the size $n$ of the input set at construction time.
 
 \paragraph{Operations} Once configured, vectors can be inserted into and erased from the table using an API similar to that of most data structures in the C++ standard library. Query operations can then be performed against the table once filled with data. A query operation will always return the closest vector found, regardless of the approximation factor $c$. This is again by design, leaving open the option of the client interpreting the result however they see fit.
 
-\paragraph{Internals} Internally, the table consists of several partitions, each represented as a mapping from vector hashes to buckets. When adding a vector to the table, this vector is assigned a unique integer identifier and stored in the table. The identifier of the vector is then stored in an associated bucket in each of the different partitions in order to avoid copying the vector itself to every partition. The key used for associating a vector with a bucket is constructed differently depending on the configured LSH scheme, but this is in essence the only functional difference between the two schemes.
+\paragraph{Internals} Internally, the table consists of several partitions, each represented as a mapping from vector keys to buckets. When adding a vector to the table, this vector is assigned a unique integer identifier and stored in the table. The identifier of the vector is then stored in an associated bucket in each of the different partitions in order to avoid copying the vector itself to every partition. The key used for associating a vector with a bucket is constructed differently depending on the configured LSH scheme, but this is in essence the only functional difference between the two schemes.
 
-\paragraph{Hashing} Both LSH schemes make use of the Mersenne Twister pseudorandom number generator during vector hashing, ensuring a uniform distribution as required by \cite{DBLP:conf/stoc/IndykM98} and \cite{DBLP:journals/corr/Pagh15}. The random number generator is in classic LSH used for setting $k$ random bits in vector masks, whereas it is in covering LSH used for setting random bits in vectors for the mapping $m$.
+\paragraph{Hashing} Both LSH schemes make use of the Mersenne Twister pseudorandom number generator when constructing hash functions, ensuring a uniform distribution as required by \cite{DBLP:conf/stoc/IndykM98} and \cite{DBLP:journals/corr/Pagh15}. The random number generator is in classic LSH used for setting $k$ random bits in vector masks, whereas it is in covering LSH used for setting random bits in vectors for the mapping $m$.

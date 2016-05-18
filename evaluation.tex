@@ -154,7 +154,9 @@ Our initial expectations of the query throughput of the covering LSH scheme was 
 
 \subsubsection{False negative rates}
 
-The last metric considered, and likely the most important one, is the false negative rates of the two LSH schemes. As can be seen in figure ~\ref{fig:false-negatives-per-query}, the number of false negatives per query is exactly as one would expect; classic LSH produces false negatives proportional to $\delta$ and covering LSH produces no false negatives at all as is also shown in the experiments conducted in \cite{DBLP:journals/corr/PhamP16}.
+The last metric considered is the false negative rates of the two LSH schemes. As can be seen in figure ~\ref{fig:false-negatives-per-query}, the number of false negatives per query is exactly as one would expect; classic LSH produces false negatives proportional to $\delta$ and covering LSH produces no false negatives at all, as is also shown by the experiments conducted in \cite{DBLP:journals/corr/PhamP16}.
+
+While classic LSH with $\delta = 0.001$ does provide low probabilities of false negatives, it does so at a major decrease in query throughput as witnessed by figure ~\ref{fig:queries-per-second}. The query throughput of classic LSH with delta $\delta = 0.01$ comes closer to that of covering LSH, but this of course at an increased rate of false negatives.
 
 \begin{figure}[ht]
   \centering

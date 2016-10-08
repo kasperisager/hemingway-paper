@@ -1,3 +1,15 @@
+\documentclass[twocolumn,a4paper]{article}
+
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{colortbl}
+\usepackage{mathpazo}
+\usepackage{microtype}
+
 \title{Exploring the Efficiency of Covering Locality-Sensitive Hashing}
 
 \author{
@@ -12,20 +24,19 @@
 
 \date{\today}
 
-\documentclass[twocolumn,a4paper]{article}
+\geometry{
+  margin = 12mm,
+  footskip = 6mm,
+  columnsep = 9mm
+}
 
-\usepackage{geometry}
-\usepackage{hyperref}
-\usepackage{enumitem}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\usepackage{amsmath}
-\usepackage{colortbl}
+\usetikzlibrary{
+  matrix,
+  positioning
+}
 
-\geometry{margin=0.5in,footskip=0.25in}
-\setlength{\columnsep}{0.35in}
 \setlist{noitemsep}
-\usetikzlibrary{matrix,positioning}
+
 \pgfplotsset{compat=1.9}
 
 \newtheorem{definition}{Definition}

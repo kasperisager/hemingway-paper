@@ -113,7 +113,7 @@ As can be seen in figure ~\ref{fig:insertions-per-second}, the insertion through
 
 \subsubsection{Query throughput}
 
-Our initial expectations of the query throughput of the covering LSH scheme was that it would follow the same trend as the insertion throughput, i.e. be slightly less performant than the query throughput of classic LSH. As seen in figure ~\ref{fig:queries-per-second}, this is however far from the case. Due to the bucket distribution of covering LSH, we can can assume that it is able to produce candidate sets that on average are smaller than those produced by classic LSH. The improved filtering efficiency in turn has a significant effect on the query throughput, making covering LSH perform much better than classic LSH on the evaluated dataset.
+Our initial expectations of the query throughput of the covering LSH scheme was that it would follow the same trend as the insertion throughput, i.e. be slightly less performant than the query throughput of classic LSH. As seen in figure ~\ref{fig:queries-per-second}, this is however far from the case. Due to the bucket distribution of covering LSH, we can assume that it is able to produce candidate sets that on average are smaller than those produced by classic LSH. The improved filtering efficiency in turn has a significant effect on the query throughput, making covering LSH perform much better than classic LSH on the evaluated dataset.
 
 \begin{figure}[ht]
   \centering

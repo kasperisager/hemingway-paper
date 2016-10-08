@@ -1,3 +1,2 @@
-latex.out
-*.pdf
-*.tex~
+out/
+pdf/
